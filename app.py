@@ -1,5 +1,5 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, redirect
+from flask import render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
@@ -16,18 +16,20 @@ def index():
 
 @app.route("/form")
 def formToPost():
-	return render_template("/form")
+	return render_template("form.html")
 
-@app.route("/list", methods=["POST"])
-def list():
-	content = request.form["message"]
-	sql = "INSERT INTO listings (content) VALUES (:content)"
-	db.session.execute(sql, {"content":content})
+@app.route("/send", methods=["POST"])
+def postObject():
+	title = request.form["header"]
+	#location = request.form["location"]
+	#content = request.form["content"]
+	sql = "INSERT INTO listings (header) VALUES (:title)"
+	db.session.execute(sql, {"title":title})
 	db.session.commit()
 	return redirect("/")
 
 @app.route("/show")
-def showList():
-	result = db.session.execute("SELECT content FROM listings")
+def show():
+	result = db.session.execute("SELECT header FROM listings")
 	content = result.fetchall()
 	return render_template("show.html", count=len(content), content=content)
