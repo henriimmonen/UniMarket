@@ -8,6 +8,7 @@ body {
   }
 
 .container {
+  padding: auto;
   width: 1200px;
   margin: 0 auto;
   text-align: center;
@@ -32,3 +33,16 @@ h3 {
     letter-spacing: -1px;
     color:#555;
   }
+
+.descriptionOfItem {
+    font-size:large;
+    text-align: center;
+    letter-spacing: 0em;
+  }
+
+.largeTextArea {
+    font-size: medium;
+    text-align: start;
+    letter-spacing: 0em;
+
+}

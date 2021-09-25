@@ -7,18 +7,20 @@
     </head>
 
     <body>
-        {{header}}
-        <br>
-        {{location}}
+        {% for item in object %}
+        <h3>Item name: </h3> <p class="descriptionOfItem">{{item.header}}</p>
+        <hr>
+        <h3>Location of the item: </h3> <p class="descriptionOfItem">{{item.location}}</p>
+        <hr>
         <div class="container">
-            {{content}}
+        <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
         </div>
-
-        <a href="/show"> Go back to all items</a>
+        {% endfor %}
+        <hr>
+        <a href="/showAll"> Go back to all items</a>
     </body>
 
 
 
 </html>
 
-<a href= "/object/{{result.id}}">Show item</a>

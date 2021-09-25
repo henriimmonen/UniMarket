@@ -26,14 +26,14 @@ def postObject():
 	sql = "INSERT INTO listings (header, location, content) VALUES (:header, :location, :content)"
 	db.session.execute(sql, {"header":header, "location":location, "content":content})
 	db.session.commit()
-	return redirect("/show")
+	return redirect("/showAll")
 
-@app.route("/show")
+@app.route("/showAll")
 def showAll():
 	sql = "SELECT id, header FROM listings ORDER BY id DESC"
 	result = db.session.execute(sql)
 	headers =  result.fetchall()
-	return render_template("show.html", count=len(headers), headers=headers)
+	return render_template("showAll.html", count=len(headers), headers=headers)
 
 @app.route("/object/<int:id>")
 def showObject(id):
