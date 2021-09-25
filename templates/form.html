@@ -1,5 +1,12 @@
 <!DOCTYPE HTML>
+	<head>
+		<meta charset="utf-8">
+		<title>Put an item for sale</title>
+		<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
+	</head>
 
+	<body>
+		<h1> Put an item for sale</h1>
 		<form action="/send" method="POST">
 		Short description of your item:	 <textarea name="header" rows="1" col="10"></textarea> <br>
 		Where is the item located: <textarea name= "location" rows="1" cols="10"></textarea> <br>
@@ -7,7 +14,8 @@
 		<textarea name= "content" rows="5" cols="40"></textarea> <br>
 		<input type= "submit" value="Send">
 		</form> 
-
+		<a href="/">Go back</a>
+	</body>
 
 </html>
  

@@ -20,16 +20,24 @@ def formToPost():
 
 @app.route("/send", methods=["POST"])
 def postObject():
-	title = request.form["header"]
-	#location = request.form["location"]
-	#content = request.form["content"]
-	sql = "INSERT INTO listings (header) VALUES (:title)"
-	db.session.execute(sql, {"title":title})
+	header = request.form["header"]
+	location = request.form["location"]
+	content = request.form["content"]
+	sql = "INSERT INTO listings (header, location, content) VALUES (:header, :location, :content)"
+	db.session.execute(sql, {"header":header, "location":location, "content":content})
 	db.session.commit()
-	return redirect("/")
+	return redirect("/show")
 
 @app.route("/show")
-def show():
-	result = db.session.execute("SELECT header FROM listings")
-	content = result.fetchall()
-	return render_template("show.html", count=len(content), content=content)
+def showAll():
+	sql = "SELECT id, header FROM listings ORDER BY id DESC"
+	result = db.session.execute(sql)
+	headers =  result.fetchall()
+	return render_template("show.html", count=len(headers), headers=headers)
+
+@app.route("/object/<int:id>")
+def showObject(id):
+	sql = "SELECT header, location, content FROM listings WHERE id=:id"
+	result = db.session.execute(sql, {"id":id})
+	object = result.fetchall()
+	return render_template("object.html", object=object)

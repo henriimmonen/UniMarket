@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Item description</title>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
+    </head>
+
+    <body>
+        {{header}}
+        <br>
+        {{location}}
+        <div class="container">
+            {{content}}
+        </div>
+
+        <a href="/show"> Go back to all items</a>
+    </body>
+
+
+
+</html>
+
+<a href= "/object/{{result.id}}">Show item</a>
