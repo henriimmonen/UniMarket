@@ -12,12 +12,26 @@
 			<h1> Welcome to UniMarket! </h1>
 			<h3> UniMarket is a portal for buying and selling used items. </h3>			
 	</header>
+		{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
 	<div class="container">
-		<a href="/form">Sell your belongings here</a> 
+		<a href="/showAll">Show all items for sale</a>	<br>
+		 {% if session.user_id %}
+		<p>Logged in as {{ session.user_name }}</p> <br>
+		<a href="/logout">Log out</a> <br>
+		<a href="/form">Sell your belongings here</a> <br> 
 		<hr>
-		<a href="/showAll">Show all items for sale</a>	
-		<hr>
-		<a href="/registration">Log in or register</a>	
+		{% else %}
+		<a href="/login">Log in...</a>	 <a href="/register">Or register as a new user!</a>
+		{% endif %}
 	</div>
 </body>
 </html>
