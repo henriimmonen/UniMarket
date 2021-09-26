@@ -2,6 +2,8 @@
 Tietokantasovellus course project 
 ### Web-application for university students to buy and sell used things 
 
+## You can test UniMarket in http://tsoha-unimarket.herokuapp.com
+
 #### Features of the application include 
 + Registering form for users 
 + Login page for users  
