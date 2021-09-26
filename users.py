@@ -7,17 +7,16 @@ def login(username, password):
     sql = "SELECT id, password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
-    hash_value = user.password  
     if not user:
         flash("Invalid username!")
         return False
 
-    if not check_password_hash(hash_value, password):
+    if not check_password_hash(user.password, password):
         flash("Invalid password!")
         return False
     
     flash("You were successfully logged in!")
-    session["user_id"] = user[1]
+    session["user_id"] = user[0]
     session["user_name"] = username
     return True
 
@@ -35,6 +34,14 @@ def register(username, password):
         return False
 
     return login(username, password)
-	
+
+def user_id():
+    return session.get("user_id",0)
+
+def user_name(user_id):
+    sql = "SELECT username FROM users WHERE id=:id"
+    result = db.session.execute(sql, {"id":user_id})
+    name = result.fetchone()
+    return name
 
 

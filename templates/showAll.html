@@ -10,15 +10,15 @@
 		<h1>List of items for sale</h1>
 		<p>Amount of items for sale: {{count}}</p>
 		<p>Items for sale:</p>
-		<hr>
 		{% for result in headers %}
 		<hr>
 		{{result.header}}
 		<a href="/object/{{result.id}}">Go to</a>
 		<hr>
 		{% endfor %}
-		<hr>
-		<a href="/form">Put an item for sale</a>	
+		{% if session.user_id %}
+		<a href="/form">Put an item for sale</a>
+		{% endif %}	
 		<hr> 
 		<a href="/">Go back to front page</a>	
 	</body>

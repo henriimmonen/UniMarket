@@ -9,12 +9,13 @@
     <body>
         {% for item in object %}
         <h3>Item name: </h3> <p class="descriptionOfItem">{{item.header}}</p>
-        <hr>
+        <br>
         <h3>Location of the item: </h3> <p class="descriptionOfItem">{{item.location}}</p>
         <hr>
         <div class="container">
         <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
         </div>
+        <p>Item posted by: {{item.user_id}}</p>
         {% endfor %}
         <hr>
         <a href="/showAll"> Go back to all items</a>

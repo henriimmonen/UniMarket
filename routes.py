@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 import users, items
 
 
@@ -16,12 +16,12 @@ def postObject():
 	header = request.form["header"]
 	location = request.form["location"]
 	content = request.form["content"]
-	if items.post_object(header, location, content):
+	user_id = users.user_id()
+	if items.post_object(header, location, content, user_id):
 		return redirect("/showAll")
 	else:
 		error = "Post object failed"
-	
-	return redirect("/showAll")
+		return redirect("/showAll")
 
 @app.route("/showAll")
 def showAll():
@@ -76,3 +76,9 @@ def register():
 def logout():
 	users.logout()
 	return redirect("/")
+
+@app.route("/myitems")
+def myitems():
+	user_id = users.user_id()
+	myitems = items.my_items(user_id)
+	return render_template("myitems.html", myitems=myitems)
