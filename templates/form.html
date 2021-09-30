@@ -13,9 +13,11 @@
 		Details of the item: <br>
 		<textarea name= "content" rows="5" cols="40"></textarea> <br>
 		<input type= "submit" value="Send">
+		<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 		</form> 
 		<hr>
-		<a href="/">Go back</a>
+		<a href="/">Go back to front page</a>
+		<a href="/myitems">My items</a>
 	</body>
 
 </html>
