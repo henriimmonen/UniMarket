@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, flash
 import users, items
 
 
@@ -20,7 +20,6 @@ def postObject():
 	if items.post_object(header, location, content, user_id):
 		return redirect("/showAll")
 	else:
-		error = "Post object failed"
 		return redirect("/showAll")
 
 @app.route("/showAll")
@@ -38,7 +37,6 @@ def showObject(id):
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-	error = None
 	if request.method == "GET":
 		return render_template("login.html")
 
@@ -46,30 +44,33 @@ def login():
 		username = request.form["username"]
 		password = request.form["password"]
 		if not users.login(username, password):
-			error = "Not able to log in"
 			return render_template("index.html")
 
 		return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-	error = None
 	if request.method == "GET":
 		return render_template("register.html")
 
 	if request.method == "POST":
 		username = request.form["username"]
 		if len(username) < 1 or len(username) > 20:
-			error = "Username not applicable"
+			flash("Something is wrong with the username")
+			return redirect("/")
+
 		password1 = request.form["password1"]
 		password2 = request.form["password2"]
 
 		if password1 != password2:
-			error = "Passwords differ"
+			flash("Passwords differ")
+			return redirect("/")
 		if password1 == "" or password2 == "":
-			error = "Password empty"
+			flash("Password empty")
+			return redirect("/")
 		if not users.register(username, password1):
-			error = "Was not able to register"
+			flash("Something went wrong!")
+			return redirect("/")
 		return redirect("/")
 
 @app.route("/logout")
@@ -82,3 +83,20 @@ def myitems():
 	user_id = users.user_id()
 	myitems = items.my_items(user_id)
 	return render_template("myitems.html", myitems=myitems)
+
+@app.route("/postPhoto", methods=["POST"])
+def photo():
+	file = request.files["file"]
+	name = file.filename
+	item_id = request.form["item_id"]
+	items.postPhoto(file, name, item_id)
+	return redirect("/showAll")
+
+
+@app.route("/photo")
+def postPhoto():
+	return render_template("photo.html")
+
+@app.route("/showphoto/<int:id>")
+def showPhoto(id):
+	return items.show_photo(id)

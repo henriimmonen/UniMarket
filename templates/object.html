@@ -16,8 +16,12 @@
         <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
         </div>
         <p>Item posted by: {{item.user_id}}</p>
-        {% endfor %}
+        <p>Item id: {{item.id}}</p>
+        
         <hr>
+        <a href="/showphoto/{{item.id}}"> Show a photo of item</a>
+        {% endfor %}
+        <a href="/photo">Add a photo</a> <hr>
         <a href="/showAll"> Go back to all items</a>
     </body>
 

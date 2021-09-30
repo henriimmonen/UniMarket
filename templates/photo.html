@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Form to post a photo</title>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
+    </head>
+
+    <body>
+        <p> Adding a photo is always a good idea:</p>
+		<form action="/postPhoto" method="POST" enctype="multipart/form-data">
+			File: <input type="file" name="file">
+            Item id <input type="number" name="item_id">
+			<p>
+			<input type="submit" value="Send">
+		</form>
+        <a href="/showAll"> Go back to all items</a>
+    </body>
+
+
+
+</html>
