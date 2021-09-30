@@ -66,7 +66,7 @@ def register():
 
 		if password1 != password2:
 			error = "Passwords differ"
-		if password1 == "":
+		if password1 == "" or password2 == "":
 			error = "Password empty"
 		if not users.register(username, password1):
 			error = "Was not able to register"

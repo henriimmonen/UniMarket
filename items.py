@@ -24,7 +24,7 @@ def show_object(id):
     return object
 
 def my_items(user_id):
-    sql = "SELECT header, id FROM listings WHERE id=:user_id" 
+    sql = "SELECT * FROM listings WHERE user_id=:user_id" 
     result = db.session.execute(sql, {"user_id":user_id})
     myitems = result.fetchall()
     return myitems
