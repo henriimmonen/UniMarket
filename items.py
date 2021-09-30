@@ -1,6 +1,6 @@
 from db import db
 import users
-from flask import make_response
+from flask import make_response, redirect
 
 def show_all():
     sql = "SELECT id, header FROM listings ORDER BY id DESC"
@@ -42,9 +42,12 @@ def my_items(user_id):
     return myitems
 
 def show_photo(id):
-    sql = "SELECT data FROM photos WHERE item_id=:id"
-    result = db.session.execute(sql, {"id":id})
-    data = result.fetchone()[0]
-    response = make_response(bytes(data))
-    response.headers.set("Content-Type","image/jpeg")
-    return response
+    try:
+        sql = "SELECT data FROM photos WHERE item_id=:id"
+        result = db.session.execute(sql, {"id":id})
+        data = result.fetchone()[0]
+        response = make_response(bytes(data))
+        response.headers.set("Content-Type","image/jpeg")
+        return response
+    except:
+        return "No photo yet :("

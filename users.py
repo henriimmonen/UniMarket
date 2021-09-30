@@ -1,5 +1,5 @@
 from db import db
-from flask import session, flash
+from flask import session, flash, request, abort
 import secrets
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -45,5 +45,9 @@ def user_name(user_id):
     result = db.session.execute(sql, {"id":user_id})
     name = result.fetchone()
     return name
+
+def check_csrf():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
 

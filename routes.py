@@ -13,6 +13,7 @@ def formToPost():
 
 @app.route("/send", methods=["POST"])
 def postObject():
+	users.check_csrf()
 	header = request.form["header"]
 	location = request.form["location"]
 	content = request.form["content"]
@@ -31,9 +32,9 @@ def showAll():
 def showObject(id):
 	if items.show_object(id):
 		object = items.show_object(id)
-	else:
-		error = "Something went wrong"
-	return render_template("object.html", object=object)
+		return render_template("object.html", object=object)
+	else: 
+		return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -86,6 +87,7 @@ def myitems():
 
 @app.route("/postPhoto", methods=["POST"])
 def photo():
+	users.check_csrf()
 	file = request.files["file"]
 	name = file.filename
 	item_id = request.form["item_id"]
@@ -99,4 +101,7 @@ def postPhoto():
 
 @app.route("/showphoto/<int:id>")
 def showPhoto(id):
-	return items.show_photo(id)
+	object = items.show_photo(id)
+	return object
+
+
