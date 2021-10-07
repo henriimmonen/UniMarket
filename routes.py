@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session, flash
+from flask import render_template, request, redirect, flash
 import users, items
 
 
@@ -104,4 +104,10 @@ def showPhoto(id):
 	object = items.show_photo(id)
 	return object
 
+@app.route("/query")
+def query():
+	query = request.args["query"]
+	query_result = items.makeQuery(query)
+	return render_template("result.html", query_result = query_result)
+	
 

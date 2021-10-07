@@ -1,3 +1,4 @@
+from flask.templating import render_template
 from db import db
 import users
 from flask import make_response, redirect
@@ -51,3 +52,9 @@ def show_photo(id):
         return response
     except:
         return "No photo yet :("
+
+def makeQuery(query):
+    sql = "SELECT id, header FROM listings WHERE header LIKE :query"
+    result = db.session.execute(sql, {"query":"%"+query+"%"})
+    items = result.fetchall()
+    return items

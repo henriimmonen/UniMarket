@@ -9,19 +9,35 @@
 
 	<body>
 		<h1>List of items for sale</h1>
-		<p>Amount of items for sale: {{count}}</p>
-		<p>Items for sale:</p>
-		{% for result in headers %}
-		<hr>
-		{{result.header}}
-		<a href="/object/{{result.id}}">Go to</a>
-		<hr>
-		{% endfor %}
-		{% if session.user_id %}
-		<a href="/form">Put an item for sale</a>
-		{% endif %}	
-		<hr> 
-		<a href="/">Go back to front page</a>	
+
+		<div class="split left">
+		<div class="centered">
+			<form action="/query">
+				Look for item: <input type="text" name="query">
+				<input type="submit" value="Send">
+			</form>
+				<hr>
+				<a href="/">Go back to front page</a>
+		</div>
+		</div>
+
+		<div class="split right">
+		<div class="centered">
+			<h3>Items for sale:</h3>
+			{% for result in headers %}
+			{{result.header}}
+			<a href="/object/{{result.id}}">To item page</a>
+			<hr>
+			{% endfor %}
+			{% if session.user_id %}
+			<a href="/form">Put an item for sale</a>
+			{% endif %}	
+		</div>
+		</div>
+		
+		<div class="body bottom">
+			
+		</div>
 	</body>
 
 </html>
