@@ -26,13 +26,14 @@ def postObject():
 @app.route("/showAll")
 def showAll():
 	headers = items.show_all()
-	return render_template("showAll.html", count=len(headers), headers=headers)
+	return render_template("showAll.html", headers=headers)
 
 @app.route("/object/<int:id>")
 def showObject(id):
 	if items.show_object(id):
 		object = items.show_object(id)
-		return render_template("object.html", object=object)
+		comments = items.show_comments(id)
+		return render_template("object.html", id=id, object=object, comments=comments)
 	else: 
 		return redirect("/")
 
@@ -94,7 +95,6 @@ def photo():
 	items.postPhoto(file, name, item_id)
 	return redirect("/showAll")
 
-
 @app.route("/photo")
 def postPhoto():
 	return render_template("photo.html")
@@ -110,4 +110,11 @@ def query():
 	query_result = items.makeQuery(query)
 	return render_template("result.html", query_result = query_result)
 	
-
+@app.route("/sendComment", methods=["POST"])
+def comment():
+	users.check_csrf()
+	item_id = request.form["id"]
+	user_id = users.user_id()
+	comment = request.form["comment"]
+	items.comment(item_id, user_id, comment)
+	return redirect("/object/" + str(item_id))

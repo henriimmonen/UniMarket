@@ -35,6 +35,11 @@ def show_object(id):
     object = result.fetchall()
     return object
 
+def show_comments(id):
+    sql1 = "SELECT content, poster_id, sent_at FROM comments WHERE item_id=:id"
+    result1 = db.session.execute(sql1, {"id":id})
+    comments = result1.fetchall()
+    return comments
 
 def my_items(user_id):
     sql = "SELECT * FROM listings WHERE user_id=:user_id" 
@@ -58,3 +63,12 @@ def makeQuery(query):
     result = db.session.execute(sql, {"query":"%"+query+"%"})
     items = result.fetchall()
     return items
+
+def comment(item_id, user_id, comment):
+    try:
+        sql = "INSERT INTO comments (content, poster_id, item_id, sent_at) VALUES (:content, :user_id, :item_id, NOW())"
+        db.session.execute(sql, {"content":comment, "user_id":user_id, "item_id":item_id})
+        db.session.commit()
+    except:
+        return "Something went wrong"
+

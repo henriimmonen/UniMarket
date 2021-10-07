@@ -8,25 +8,46 @@
     </head>
 
     <body>
-        {% for item in object %}
-        <h3>Item name: </h3> <p class="descriptionOfItem">{{item.header}}</p>
-        <br>
-        <h3>Location of the item: </h3> <p class="descriptionOfItem">{{item.location}}</p>
-        <hr>
-        <div class="container">
-        <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
+        <div class="split left">
+        <div class="centered">
+            {% for item in object %}
+            <h3>Item name: </h3> <p class="descriptionOfItem">{{item.header}}</p>
+            <hr>
+            <h3>Location of the item: </h3> <p class="descriptionOfItem">{{item.location}}</p>
+            <hr>
+            <div class="container">
+            <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
+            </div>
+            <p>Item posted by: {{item.user_id}}</p>
+            <p>Item id: {{item.id}}</p>
+            <hr>
+            <a href="/showphoto/{{item.id}}"> Show a photo of item</a>
+            {% endfor %}
+            <a href="/photo">Add a photo</a> <hr>
         </div>
-        <p>Item posted by: {{item.user_id}}</p>
-        <p>Item id: {{item.id}}</p>
-        
-        <hr>
-        <a href="/showphoto/{{item.id}}"> Show a photo of item</a>
-        {% endfor %}
-        <a href="/photo">Add a photo</a> <hr>
-        <a href="/showAll"> Go back to all items</a>
+        </div>
+
+        <div class="split right">
+        <div class="centered">
+            <h3>Questions about the item</h3>
+            {% for comment in comments %}
+            <p>{{comment.content}}</p>
+            <p>Posted by {{comment.user_id}}</p>
+            <p>Sent at: {{comment.sent_at}}</p>
+            {% endfor %}
+            {% if session.user_id %}
+            <form action="/sendComment" method="POST">
+                <textarea name= "comment" rows="2" cols="40"></textarea> 
+                <input type="submit" value="Send">
+                <input type="hidden" name="id" value="{{id}}">
+            </form>
+            {% endif %}
+        </div>
+        </div>
+            <a href="/showAll"> Go back to all items</a>
+        <div class="bottom">
+			UniMarket is a Tietokantasovellus-project for University of Helsinki.
+		</div>
     </body>
-
-
-
 </html>
 

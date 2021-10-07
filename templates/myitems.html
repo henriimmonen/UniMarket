@@ -11,9 +11,12 @@
 <body>
     <h3>My items for sale:</h3>
     {% for item in myitems %}
-    <p>{{item.header}}</p>  <a href="/object/{{item.id}}">Go to</a><br>
+    <p>{{item.header}}</p>  <a href="/object/{{item.id}}">Go to</a>
     {% endfor %}
     <hr>
     <a href="/">Go back to front page</a>
+    <div class="bottom">
+        UniMarket is a Tietokantasovellus-project for University of Helsinki.
+    </div>
 </body>
 </html>
