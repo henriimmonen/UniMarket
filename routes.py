@@ -91,13 +91,13 @@ def photo():
 	users.check_csrf()
 	file = request.files["file"]
 	name = file.filename
-	item_id = request.form["item_id"]
-	items.postPhoto(file, name, item_id)
-	return redirect("/showAll")
+	item_id = request.form["id"]
+	items.post_photo(file, name, item_id)
+	return redirect("/object/" + str(item_id))
 
-@app.route("/photo")
-def postPhoto():
-	return render_template("photo.html")
+@app.route("/object/<int:id>/photo")
+def postPhoto(id):
+	return render_template("photo.html", id=id)
 
 @app.route("/showphoto/<int:id>")
 def showPhoto(id):

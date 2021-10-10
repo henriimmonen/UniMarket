@@ -18,12 +18,10 @@
             <div class="container">
             <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
             </div>
-            <p>Item posted by: {{item.user_id}}</p>
-            <p>Item id: {{item.id}}</p>
             <hr>
-            <a href="/showphoto/{{item.id}}"> Show a photo of item</a>
+            <a href="/showphoto/{{item.id}}"> Show a photo of item</a> <hr>
+            <a href="/object/{{item.id}}/photo">Add a photo</a> 
             {% endfor %}
-            <a href="/photo">Add a photo</a> <hr>
         </div>
         </div>
 
@@ -44,9 +42,8 @@
             {% endif %}
         </div>
         </div>
-            <a href="/showAll"> Go back to all items</a>
         <div class="bottom">
-			UniMarket is a Tietokantasovellus-project for University of Helsinki.
+			UniMarket is a Tietokantasovellus-project for University of Helsinki. <a href="/"> Front page</a>
 		</div>
     </body>
 </html>

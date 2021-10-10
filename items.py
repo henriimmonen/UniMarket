@@ -18,7 +18,7 @@ def post_object(header, location, content, user_id):
     db.session.commit()
     return True
 
-def postPhoto(file, name, item_id):
+def post_photo(file, name, item_id):
     if not name.endswith(".jpg"):
         return False
     data = file.read()
