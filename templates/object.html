@@ -30,7 +30,7 @@
             <h3>Questions about the item</h3>
             {% for comment in comments %}
             <p>{{comment.content}}</p>
-            <p>Posted by {{comment.user_id}}</p>
+            <p>Posted by {{comment.poster_id}}</p>
             <p>Sent at: {{comment.sent_at}}</p>
             {% endfor %}
             {% if session.user_id %}
