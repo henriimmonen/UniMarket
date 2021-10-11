@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
 		<title>List of items for sale</title>
-		<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
+		<link rel="stylesheet" type= "text/css" href= "{{url_for('static',filename='CSS/main.css') }}">
 	</head>
 
 	<body>
@@ -16,8 +16,11 @@
 				<input type="text" name="query">
 				<input type="submit" value="Send">
 			</form>
+			<hr>
+			<a href="/">Back to index page</a>
 		</div>
 		</div>
+
 
 		<div class="split right">
 		<div class="centered">
