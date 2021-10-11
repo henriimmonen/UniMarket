@@ -33,7 +33,7 @@ def showObject(id):
 	if items.show_object(id):
 		object = items.show_object(id)
 		comments = items.show_comments(id)
-		return render_template("object.html", id=id, object=object, comments=comments)
+		return render_template("object.html",id=id, object=object, comments=comments)
 	else: 
 		return redirect("/")
 
@@ -112,7 +112,6 @@ def query():
 	
 @app.route("/sendComment", methods=["POST"])
 def comment():
-	users.check_csrf()
 	item_id = request.form["id"]
 	user_id = users.user_id()
 	comment = request.form["comment"]
