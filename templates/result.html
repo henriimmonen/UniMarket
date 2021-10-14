@@ -1,11 +1,9 @@
 {% extends "layout.html" %}
 {% block title %} <h1>Found items: </h1> {% endblock %}
 {% block content %}
-<ul>
 {% for result in query_result %}
-    <li>{{result.header}} <a href="/object/{{result.id}}"> To item page</a></li>
-% endfor %}
+<ul>
+  <li>{{result.header}} <a href="/object/{{result.id}}"> To item page</a></li>
 </ul>
+{% endfor %}
 {% endblock %}
-        
- 

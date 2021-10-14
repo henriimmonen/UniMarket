@@ -1,7 +1,6 @@
-from flask.templating import render_template
 from db import db
 import users
-from flask import make_response, redirect
+from flask import make_response, render_template
 
 def show_all():
     sql = "SELECT id, header FROM listings ORDER BY id DESC"
@@ -36,7 +35,7 @@ def show_object(id):
     return object
 
 def show_comments(id):
-    sql1 = "SELECT content, poster_id, sent_at FROM comments WHERE item_id=:id"
+    sql1 = "SELECT c.content, c.sent_at, u.username FROM comments c, users u WHERE item_id=:id AND u.id=c.poster_id "
     result1 = db.session.execute(sql1, {"id":id})
     comments = result1.fetchall()
     return comments
@@ -56,7 +55,8 @@ def show_photo(id):
         response.headers.set("Content-Type","image/jpeg")
         return response
     except:
-        return "No photo yet :("
+        error = "Photo download unsuccessful"
+        return render_template("error.html", error=error)
 
 def make_query(query):
     sql = "SELECT id, header FROM listings WHERE header LIKE :query"
@@ -70,5 +70,6 @@ def comment(item_id, user_id, comment):
         db.session.execute(sql, {"content":comment, "user_id":user_id, "item_id":item_id})
         db.session.commit()
     except:
-        return "Something went wrong"
+        error = "Something went wrong"
+        return render_template("error.html", error=error)
 

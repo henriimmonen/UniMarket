@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect
 import users, items
 
 
@@ -58,21 +58,21 @@ def register():
 	if request.method == "POST":
 		username = request.form["username"]
 		if len(username) < 1 or len(username) > 20:
-			flash("Something is wrong with the username")
-			return redirect("/")
+			error = "Something is wrong with the username"
+			return render_template("error.html", error=error)
 
 		password1 = request.form["password1"]
 		password2 = request.form["password2"]
 
 		if password1 != password2:
-			flash("Passwords differ")
-			return redirect("/")
+			error = "Passwords differ"
+			return render_template("error.html", error=error)
 		if password1 == "" or password2 == "":
-			flash("Password empty")
-			return redirect("/")
+			error = "Password empty"
+			return render_template("error.html", error=error)
 		if not users.register(username, password1):
-			flash("Something went wrong!")
-			return redirect("/")
+			error = "Something went wrong!"
+			return render_template("error.html", error=error)
 		return redirect("/")
 
 @app.route("/logout")
