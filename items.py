@@ -58,7 +58,7 @@ def show_photo(id):
     except:
         return "No photo yet :("
 
-def makeQuery(query):
+def make_query(query):
     sql = "SELECT id, header FROM listings WHERE header LIKE :query"
     result = db.session.execute(sql, {"query":"%"+query+"%"})
     items = result.fetchall()

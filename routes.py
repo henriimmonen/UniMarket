@@ -86,7 +86,7 @@ def myitems():
 	myitems = items.my_items(user_id)
 	return render_template("myitems.html", myitems=myitems)
 
-@app.route("/postPhoto", methods=["POST"])
+@app.route("/postphoto", methods=["POST"])
 def photo():
 	users.check_csrf()
 	file = request.files["file"]
@@ -107,7 +107,7 @@ def showPhoto(id):
 @app.route("/query")
 def query():
 	query = request.args["query"]
-	query_result = items.makeQuery(query)
+	query_result = items.make_query(query)
 	return render_template("result.html", query_result = query_result)
 	
 @app.route("/sendComment", methods=["POST"])
