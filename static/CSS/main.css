@@ -34,38 +34,6 @@ h3 {
     color:#555;
   }
 
-.descriptionOfItem {
-    font-size:large;
-    text-align: center;
-    letter-spacing: 0em;
-  }
-
-.largeTextArea {
-    font-size: medium;
-    text-align:center;
-    letter-spacing: 0em;
-
-}
-
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.left {
-  left: 0;
-}
-
-.right {
-  display: table-row;
-  right: 0;
-}
-
 .centered {
   position: absolute;
   top: 50%;
@@ -75,6 +43,7 @@ h3 {
 }
 
 .bottom {
+  position:relative;
   width: 100%;
   background-color: antiquewhite;
   padding: 15px 0;

@@ -1,28 +1,15 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="utf-8">
-		<title>Page for users to register</title>
-		<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
-    </head>
+{% extends "layout.html" %}
+{% block title %} <h1>Register as a user of UniMarket</h1> {% endblock %}
+{% block content %}
+<form action="/register" method="POST">
+    <p>Username:<br>
+    <input type="text" name="username"></p>
+    <p>Password:<br>
+    <input type="password" name="password1"><br>
+    <p>Enter password again:</p>
+    <input type="password" name="password2"></p>
+    <input type="submit" value="Register">
+</form>
+{% endblock %}
         
-    <body>
-        <h1>Register as a user of UniMarket</h1>
-        {% if error %}
-        <p class=error><strong>Error:</strong> {{ error }}
-        {% endif %}   
-        <form action="/register" method="POST">
-        <p>Username:<br>
-        <input type="text" name="username"></p>
-        <p>Password:<br>
-        <input type="password" name="password1"><br>
-        <p>Enter password again:</p>
-        <input type="password" name="password2"></p>
-        <input type="submit" value="Register">
-        </form>
         
-    </body>
-
-
-
-</html>
