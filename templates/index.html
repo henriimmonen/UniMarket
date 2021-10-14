@@ -1,46 +1,12 @@
-<!DOCTYPE HTML>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<title> Welcome to UniMarket!</title>
-	<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
-</head>
-
-<body>
-	<header>
-			<h1> Welcome to UniMarket! </h1>
-			<h3> UniMarket is a portal for buying and selling used items. </h3>			
-	</header>
-		{% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block body %}{% endblock %}
-	<div class="container">
-		<a href="/showAll">Show all items for sale</a>	<br>
-		 {% if session.user_id %}
-		<p>Logged in as {{ session.user_name }}</p> <br>
-		<a href="/logout">Log out</a> <br>
-		<a href="/form">Sell your belongings here</a> <br> 
-		<a href="/myitems">My items</a>
-		<hr>
-		{% else %}
-		<a href="/login">Log in...</a>	 <a href="/register">Or register as a new user!</a>
-		{% endif %}
-	</div>
-	<div class="bottom">
-		UniMarket is a Tietokantasovellus-project for University of Helsinki.
-	</div>
-</body>
-</html>
-
-
-
-	
+{% extends "layout.html" %}
+{% block content %} 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+{% for message in messages %}
+<li>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endblock %}

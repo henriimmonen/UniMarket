@@ -9,7 +9,7 @@
 
     <body>
         <p> Adding a photo is always a good idea</p> <br>
-		<form action="/postPhoto" method="POST" enctype="multipart/form-data">
+		<form action="/postphoto" method="POST" enctype="multipart/form-data">
 			File: <input type="file" name="file">
 			<input type="submit" value="Send">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
