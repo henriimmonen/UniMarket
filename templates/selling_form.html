@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}<h3>Put an item for sale</h3> {% endblock %}
+{% block content %}
+<form action="/send" method="POST">
+Short description of your item:	 <textarea name="header" rows="1" col="10"></textarea> <br>
+Where is the item located: <textarea name= "location" rows="1" cols="10"></textarea> <br>
+Details of the item: <br>
+<textarea name= "content" rows="5" cols="40"></textarea> <br>
+<input type= "submit" value="Send">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form> 
+{% endblock %}
