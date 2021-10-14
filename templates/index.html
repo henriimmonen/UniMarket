@@ -9,4 +9,17 @@
 </ul>
 {% endif %}
 {% endwith %}
+<br>
+<div class="container">
+	<a href="/showAll">Show all items for sale</a>	<br>
+	 {% if session.user_id %}
+	<p>Logged in as {{ session.user_name }}</p> <br>
+	<a href="/logout">Log out</a> <br>
+	<a href="/sell">Sell your belongings here</a> <br> 
+	<a href="/myitems">My items</a>
+	<hr>
+	{% else %}
+	<a href="/login">Log in...</a>	 <a href="/register">Or register as a new user!</a>
+	{% endif %}
+</div>
 {% endblock %}
