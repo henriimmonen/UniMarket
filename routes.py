@@ -7,9 +7,9 @@ import users, items
 def index():
 	return render_template("index.html")
 
-@app.route("/form")
+@app.route("/sell")
 def formToPost():
-	return render_template("form.html")
+	return render_template("selling_form.html")
 
 @app.route("/send", methods=["POST"])
 def postObject():

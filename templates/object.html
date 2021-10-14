@@ -1,50 +1,41 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <title>Item description</title>
-        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
-    </head>
-
-    <body>
-        <div class="split left">
-        <div class="centered">
-            {% for item in object %}
-            <h3>Item name: </h3> <p class="descriptionOfItem">{{item.header}}</p>
-            <hr>
-            <h3>Location of the item: </h3> <p class="descriptionOfItem">{{item.location}}</p>
-            <hr>
-            <div class="container">
-            <h3>Item description</h3> <p class="largeTextArea">{{item.content}}</p>
-            </div>
-            <hr>
+{% extends "layout.html" %}
+{% block title %} {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-6">
+        {% for item in object %}
+        <ul>
+          <h4>Item name:</h4>
+          <li>{{item.header}}</li>
+          <h4>Location of the item:</h4>
+          <li>{{item.location}}</li>
+          <h4>Item description</h4> 
+          <li>{{item.content}}</li>
+        </ul>
             <a href="/showphoto/{{item.id}}"> Show a photo of item</a> <hr>
-            <a href="/object/{{item.id}}/photo">Add a photo</a> 
-            {% endfor %}
-        </div>
-        </div>
-
-        <div class="split right">
-        <div class="centered">
-            <h3>Questions about the item</h3>
-            {% for comment in comments %}
-            <p>{{comment.content}}</p>
-            <p>Posted by {{comment.poster_id}}</p>
-            <p>Sent at: {{comment.sent_at}}</p>
-            {% endfor %}
             {% if session.user_id %}
-            <form action="/sendComment" method="POST">
-                <textarea name= "comment" rows="2" cols="40"></textarea> 
-                <input type="submit" value="Send">
-                <input type="hidden" name="id" value="{{id}}">
-            </form>
+            <a href="/object/{{item.id}}/photo">Add a photo</a> 
             {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col py-3 px-lg-5 border bg-light">
+        <h3>Questions about the item</h3>
+        {% for comment in comments %}
+        <div class="container-sm">
+          <p>{{comment.content}} Posted by {{comment.poster_id}}</p>
+          <p>Sent at: {{comment.sent_at}}</p>
+          <br>
         </div>
-        </div>
-        <div class="bottom">
-			UniMarket is a Tietokantasovellus-project for University of Helsinki.
-		</div>
-    </body>
-</html>
-
+        {% endfor %}
+        {% if session.user_id %}
+        <form action="/sendComment" method="POST">
+        <textarea name= "comment" rows="2" cols="40"></textarea> 
+        <input type="submit" value="Send">
+        <input type="hidden" name="id" value="{{id}}">
+        </form>
+        {% endif %}
+      </div>
+    </div>
+</div>
+{% endblock %}
