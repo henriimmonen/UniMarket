@@ -15,13 +15,23 @@ def formToPost():
 def postObject():
 	users.check_csrf()
 	header = request.form["header"]
+	if len(header) < 1:
+		error = "Please enter a title for the item"
+		return render_template("error.html", error=error)
 	location = request.form["location"]
+	if len(location) < 1:
+		error = "Please enter a location for the item"
+		return render_template("error.html", error=error)
 	content = request.form["content"]
+	if len(content) < 1:
+		error = "Please enter description of the item"
+		return render_template("error.html", error=error)
 	user_id = users.user_id()
 	if items.post_object(header, location, content, user_id):
 		return redirect("/showAll")
 	else:
-		return redirect("/showAll")
+		error = "Something went wrong"
+		return render_template("error.html",error=error)
 
 @app.route("/showAll")
 def showAll():
