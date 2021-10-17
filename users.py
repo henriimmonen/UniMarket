@@ -32,10 +32,9 @@ def register(username, password):
         sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
         db.session.execute(sql, {"username":username, "password":hash_value})
         db.session.commit()
+        return True
     except:
         return False
-
-    return login(username, password)
 
 def user_id():
     return session.get("user_id",0)
@@ -50,4 +49,8 @@ def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
 
-
+def get_comments(user_id):
+    sql = "SELECT content, sent_at, sent_by FROM messages WHERE sent_to=:id"
+    result = db.session.execute(sql, {"id":user_id})
+    messages = result.fetchall()
+    return messages

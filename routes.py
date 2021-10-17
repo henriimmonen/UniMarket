@@ -8,11 +8,11 @@ def index():
 	return render_template("index.html")
 
 @app.route("/sell")
-def formToPost():
+def form_to_post():
 	return render_template("selling_form.html")
 
 @app.route("/send", methods=["POST"])
-def postObject():
+def post_object():
 	users.check_csrf()
 	header = request.form["header"]
 	if len(header) < 1:
@@ -34,12 +34,12 @@ def postObject():
 		return render_template("error.html",error=error)
 
 @app.route("/showAll")
-def showAll():
+def show_all():
 	headers = items.show_all()
 	return render_template("showAll.html", headers=headers)
 
 @app.route("/object/<int:id>")
-def showObject(id):
+def show_object(id):
 	if items.show_object(id):
 		object = items.show_object(id)
 		comments = items.show_comments(id)
@@ -91,7 +91,7 @@ def logout():
 	return redirect("/")
 
 @app.route("/myitems")
-def myitems():
+def my_items():
 	user_id = users.user_id()
 	myitems = items.my_items(user_id)
 	return render_template("myitems.html", myitems=myitems)
@@ -106,11 +106,11 @@ def photo():
 	return redirect("/object/" + str(item_id))
 
 @app.route("/object/<int:id>/photo")
-def postPhoto(id):
+def post_photo(id):
 	return render_template("photo.html", id=id)
 
 @app.route("/showphoto/<int:id>")
-def showPhoto(id):
+def show_photo(id):
 	object = items.show_photo(id)
 	return object
 
@@ -119,7 +119,7 @@ def query():
 	query = request.args["query"]
 	query_result = items.make_query(query)
 	return render_template("result.html", query_result = query_result)
-	
+
 @app.route("/sendComment", methods=["POST"])
 def comment():
 	item_id = request.form["id"]
@@ -127,3 +127,14 @@ def comment():
 	comment = request.form["comment"]
 	items.comment(item_id, user_id, comment)
 	return redirect("/object/" + str(item_id))
+
+@app.route("/userinfo", methods=["GET"])
+def user_information():
+	user_id = users.user_id()
+	username = users.user_name(user_id)
+	messages = users.get_comments(user_id)
+	return render_template("userinformation.html", username=username, messages=messages)
+
+@app.route("/sendmessage", methods=["GET"])
+def private_message():
+	return render_template("private_message.html")
