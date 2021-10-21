@@ -1,15 +1,28 @@
 {% extends "layout.html" %}
-{% block title %} <h3>User information</h3> {% endblock %}
 {% block content %}
-<h4>{{username}}</h4>
-<h5>Private messages:</h5>
-<p>Total number of messages: {{message_count}}</p>
-<a href="/sendmessage">Send a message</a>
+<br>
+<div class="container px-lg-5">
+  <div class="col py-3 px-lg-5 border bg-light">
+    <h4>Username: {{username}}</h4> <a href="/sendmessage">Send a message</a>
+  </div>
+</div>
 {% for message in messages %}
-<ul>
-    <li><p>Message from:</p> {{message.sent_by}}</li>
-    <li><p>{{message.content}}</p></li>
-    <li><p>{{message.sent_at}}</p></li>
-</ul>
+    <h3>Private Messages</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th scope="col">Message from:</th>
+            <th scope="col">Message content:</th>
+            <th scope="col">Sent at:</th>
+        </tr>
+        </thead>
+      <tbody>
+        <tr>
+            <td>{{message.username}}</td>
+            <td>{{message.content}}</td>
+            <td>{{message.sent_at}}</td>
+        </tr>
+      </tbody>
+    </table>
 {% endfor %}
 {% endblock %}

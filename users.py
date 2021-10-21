@@ -42,15 +42,30 @@ def user_id():
 def user_name(user_id):
     sql = "SELECT username FROM users WHERE id=:id"
     result = db.session.execute(sql, {"id":user_id})
-    name = result.fetchone()
+    name = result.fetchone()[0]
     return name
+
+def other_user_id(username):
+    sql = "SELECT id FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user_id = result.fetchone()[0]
+    return user_id
 
 def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
 
-def get_comments(user_id):
-    sql = "SELECT content, sent_at, sent_by FROM messages WHERE sent_to=:id"
+def get_messages(user_id):
+    sql = "SELECT m.content, m.sent_at, u.username FROM messages m, users u WHERE sent_to=:id AND u.id=m.sent_by"
     result = db.session.execute(sql, {"id":user_id})
     messages = result.fetchall()
     return messages
+
+def send_private_message(content, sent_by, sent_to):
+    try:
+        sql = "INSERT INTO messages (content, sent_at, sent_by, sent_to) VALUES (:content, NOW(), :sent_by, :sent_to)"
+        db.session.execute(sql, {"content":content, "sent_by":sent_by, "sent_to":sent_to})
+        db.session.commit()
+        return True
+    except:
+        return False

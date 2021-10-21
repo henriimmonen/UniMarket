@@ -29,7 +29,7 @@
         </div>
         {% endfor %}
         {% if session.user_id %}
-        <form action="/sendComment" method="POST">
+        <form action="/sendcomment" method="POST">
         <textarea name= "comment" rows="2" cols="40"></textarea> 
         <input type="submit" value="Send">
         <input type="hidden" name="id" value="{{id}}">

@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}<h3>Send a message to another user</h3>{% endblock %}
+{% block content %}
+<form action="/postmessage" method="POST">
+  <p>Username for the recipient:</p><input type="text" name="username">
+  <p>Message:</p><textarea name="content" rows="5" col="40"></textarea> <br>
+  <input type= "submit" value="Send">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form> 
+{% endblock %}

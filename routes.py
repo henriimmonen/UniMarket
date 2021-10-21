@@ -33,10 +33,10 @@ def post_object():
 		error = "Something went wrong"
 		return render_template("error.html",error=error)
 
-@app.route("/showAll")
+@app.route("/showall")
 def show_all():
 	headers = items.show_all()
-	return render_template("showAll.html", headers=headers)
+	return render_template("show_all.html", headers=headers)
 
 @app.route("/object/<int:id>")
 def show_object(id):
@@ -83,6 +83,7 @@ def register():
 		if not users.register(username, password1):
 			error = "Something went wrong!"
 			return render_template("error.html", error=error)
+		users.login(username, password1)
 		return redirect("/")
 
 @app.route("/logout")
@@ -120,7 +121,7 @@ def query():
 	query_result = items.make_query(query)
 	return render_template("result.html", query_result = query_result)
 
-@app.route("/sendComment", methods=["POST"])
+@app.route("/sendcomment", methods=["POST"])
 def comment():
 	item_id = request.form["id"]
 	user_id = users.user_id()
@@ -132,9 +133,25 @@ def comment():
 def user_information():
 	user_id = users.user_id()
 	username = users.user_name(user_id)
-	messages = users.get_comments(user_id)
+	messages = users.get_messages(user_id)
 	return render_template("userinformation.html", username=username, messages=messages)
 
 @app.route("/sendmessage", methods=["GET"])
 def private_message():
 	return render_template("private_message.html")
+
+@app.route("/postmessage", methods=["GET","POST"])
+def post_message():
+	if request.method == "GET":
+		return redirect("/")
+	else:
+		sent_to_username = request.form["username"]
+		sent_to = users.other_user_id(sent_to_username)
+		content = request.form["content"]
+		sent_by = users.user_id()
+		users.check_csrf()
+		if users.send_private_message(content, sent_by, sent_to):
+			return redirect("/userinfo")
+		else:
+			error = "Message not sent"
+			return render_template("error.html", error=error)
