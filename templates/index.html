@@ -11,8 +11,10 @@
 {% endwith %}
 <br>
 <div class="container">
-	 {% if session.user_id %}
-	<p>Logged in as {{ session.user_name }}</p> <br>
+	{% if session.user_id %}
+	<div class="col py-3 px-lg-5 border bg-light">
+	  <h3>Logged in as {{ session.user_name }}</h3>
+	</div>
 	{% else %}
 	<a href="/login">Log in...</a>	 <a href="/register">Or register as a new user!</a>
 	{% endif %}

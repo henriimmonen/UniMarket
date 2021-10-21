@@ -4,22 +4,37 @@
 <div class="container px-lg-5">
 	<div class="row mx-lg-n5">
 	  <div class="col py-3 px-lg-5 border bg-light">
-		<h5>Look for an item</h5>
 		<form action="/query">
-		<input type="text" name="query">
-		<input type="submit" value="Send">
+		  <div class="form-group col-12">
+			<input type="text" class="form-control" name="query" placeholder="Search for an item">
+		  </div>
+		  <div class="form-group col-12">
+			<button type="submit" class="btn btn-primary">Send</button>
+		  </div>
 		</form>
 	  </div>
-	  <div class="col py-3 px-lg-5 border bg-light">
-		<h3>Items for sale:</h3>
-		<ul>
-		{% for result in headers %}
-		<li>{{result.header}} <a href="/object/{{result.id}}">To item page</a> </li>
-		{% endfor %}
-		</ul>
-	  </div>
 	</div>
-  </div>
+</div>
+{% if all_items %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Location</th>
+				</tr>
+			</thead>
+			{% for result in all_items %}
+			<tbody>
+				<tr>
+					<td><a href="/object/{{result.id}}">{{result.header}}</a></td>
+					<td>{{result.location}}</td>
+				</tr>
+			</tbody>
+			{% endfor %}
+			{% else %}
+			<h3>No items for sale yet</h3>
+			{% endif %}
+		</table>
 {% endblock %}
 			
 			

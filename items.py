@@ -3,10 +3,10 @@ import users
 from flask import make_response, render_template
 
 def show_all():
-    sql = "SELECT id, header FROM listings ORDER BY id DESC"
+    sql = "SELECT id, header, location FROM listings ORDER BY id DESC"
     result = db.session.execute(sql)
-    headers =  result.fetchall()
-    return headers
+    all_items =  result.fetchall()
+    return all_items
 
 def post_object(header, location, content, user_id):
     user_id = users.user_id()

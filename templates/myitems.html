@@ -1,8 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}<h3>My items for sale:</h3>{% endblock %}
 {% block content %}
-{% for item in myitems %}
-<ul>{{item.header}}</ul>
-<a href="/object/{{item.id}}">Go to</a>
-{% endfor %}
+<div class="container px-lg-5">
+    <div class="col py-3 px-lg-5 border bg-light">
+      {% if myitems %}
+      {% for item in myitems %}
+      <ul>
+          <li><a href="/object/{{item.id}}">{{item.header}}</a></li>
+      </ul>
+      {% endfor %}
+      {% else %}
+        <h5>No items yet!</h5>
+      {% endif %}
+    </div>
+</div>
 {% endblock %}

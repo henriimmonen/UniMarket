@@ -28,15 +28,15 @@ def post_object():
 		return render_template("error.html", error=error)
 	user_id = users.user_id()
 	if items.post_object(header, location, content, user_id):
-		return redirect("/showAll")
+		return redirect("/showall")
 	else:
 		error = "Something went wrong"
 		return render_template("error.html",error=error)
 
 @app.route("/showall")
 def show_all():
-	headers = items.show_all()
-	return render_template("show_all.html", headers=headers)
+	all_items = items.show_all()
+	return render_template("show_all.html", all_items=all_items)
 
 @app.route("/object/<int:id>")
 def show_object(id):
