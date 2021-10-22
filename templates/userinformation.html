@@ -1,47 +1,76 @@
 {% extends "layout.html" %}
 {% block content %}
 <br>
-<div class="container px-lg-5">
-  <div class="col py-3 px-lg-5 border bg-light">
-    <h4>Username: {{username}}</h4> <a href="/sendmessage">Send a message</a>
+<div class="container px-sm-5">
+  <h4>Username: <b>{{username}}</b></h4> <a href="/sendmessage">Send a message</a>
+</div>
+<h3>My items for sale</h3>
+<div class="container">
+  <div class="col border bg-light rounded">
+    {% if myitems %}
+    {% for item in myitems %}
+    <ul>
+      <li><a href="/object/{{item.id}}">{{item.header}}</a> <br> 
+      <a href="/object/{{item.id}}/delete"><b>Delete item</b></a></li>
+    </ul>
+    {% endfor %}
+    {% else %}
+    <h5>No items yet!</h5>
+    {% endif %}
   </div>
 </div>
-  <h3>Received messages</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Message from:</th>
-        <th scope="col">Sent at:</th>
-        <th scope="col">Message content:</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        {% for message in messages %}
-        <td>{{message.username}}</td>
-        <td>{{message.sent_at}}</td>
-        <td>{{message.content}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <h3>Sent messages</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Message to:</th>
-        <th scope="col">Sent at:</th>
-        <th scope="col">Message content:</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        {% for sent in sent_messages %}
-        <td>{{sent.username}}</td>
-        <td>{{sent.sent_at}}</td>
-        <td>{{sent.content}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<h3>Received messages</h3>
+{% if messages %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Message from:</th>
+      <th scope="col">Sent at:</th>
+      <th scope="col">Message content:</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for message in messages %}
+      <td>{{message.username}}</td>
+      <td>{{message.sent_at}}</td>
+      <td>{{message.content}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="container">
+  <div class="col border bg-light rounded">
+    <h5>No messages</h5>
+  </div>
+</div>
+{% endif %}
+<h3>Sent messages</h3>
+{% if sent_messages %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Message to:</th>
+      <th scope="col">Sent at:</th>
+      <th scope="col">Message content:</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for sent in sent_messages %}
+      <td>{{sent.username}}</td>
+      <td>{{sent.sent_at}}</td>
+      <td>{{sent.content}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="container">
+  <div class="col border bg-light rounded">
+    <h5>No messages</h5>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

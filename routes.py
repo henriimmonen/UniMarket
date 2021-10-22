@@ -98,16 +98,10 @@ def show_object(id):
 def delete_item(id):
 	if items.check_id(users.user_id()):
 		items.delete_item(id)
-		return redirect("/myitems")
+		return redirect("/userinfo")
 	else:
 		error = "Not able to delete item"
 		return render_template("error.html", error=error)
-
-@app.route("/myitems")
-def my_items():
-	user_id = users.user_id()
-	myitems = items.my_items(user_id)
-	return render_template("myitems.html", myitems=myitems)
 
 @app.route("/postphoto", methods=["POST"])
 def photo():
@@ -157,8 +151,10 @@ def user_information():
 	username = users.user_name(user_id)
 	messages_to_user = users.get_messages(user_id)
 	messages_sent_by_user = users.get_sent_messages(user_id)
+	user_id = users.user_id()
+	myitems = items.my_items(user_id)
 	return render_template("userinformation.html", username=username, 
-		messages=messages_to_user, sent_messages=messages_sent_by_user)
+		messages=messages_to_user, sent_messages=messages_sent_by_user, myitems=myitems)
 
 @app.route("/sendmessage", methods=["GET"])
 def private_message():

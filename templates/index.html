@@ -4,21 +4,21 @@
 {% if messages %}
 <ul class=flashes>
 {% for message in messages %}
-<li>{{ message }}</li>
+  <li>{{message}}</li>
 {% endfor %}
 </ul>
 {% endif %}
 {% endwith %}
 <br>
 <div class="container">
-	{% if session.user_id %}
-	<div class="row justify-content-center">
-	  <div class="col-4 text-light bg-dark rounded">
-		<h5>Logged in as {{ session.user_name }}</h5>
-	  </div>
-	</div>
-	{% else %}
-	<a href="/login">Log in...</a>	 <a href="/register">Or register as a new user!</a>
-	{% endif %}
+  {% if session.user_id %}
+  <div class="row justify-content-center">
+    <div class="col-4 text-light bg-dark rounded">
+    <h5>Logged in as {{ session.user_name }}</h5>
+    </div>
+  </div>
+  {% else %}
+  <a href="/login">Log in...</a>	 <a href="/register">Or register as a new user!</a>
+  {% endif %}
 </div>
 {% endblock %}

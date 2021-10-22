@@ -3,7 +3,7 @@ import users
 from flask import make_response, render_template
 
 def show_all():
-    sql = "SELECT id, header, location FROM listings WHERE visible=TRUE ORDER BY id DESC"
+    sql = "SELECT id, header, location, price FROM listings WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(sql)
     all_items =  result.fetchall()
     return all_items
