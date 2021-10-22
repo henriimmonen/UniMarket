@@ -61,6 +61,12 @@ def get_messages(user_id):
     messages = result.fetchall()
     return messages
 
+def get_sent_messages(user_id):
+    sql = "SELECT m.content, m.sent_at, u.username FROM messages m, users u WHERE sent_by=:id AND u.id=m.sent_to"
+    result = db.session.execute(sql, {"id":user_id})
+    messages = result.fetchall()
+    return messages
+
 def send_private_message(content, sent_by, sent_to):
     try:
         sql = "INSERT INTO messages (content, sent_at, sent_by, sent_to) VALUES (:content, NOW(), :sent_by, :sent_to)"

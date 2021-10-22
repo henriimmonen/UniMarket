@@ -147,8 +147,9 @@ def comment():
 def user_information():
 	user_id = users.user_id()
 	username = users.user_name(user_id)
-	messages = users.get_messages(user_id)
-	return render_template("userinformation.html", username=username, messages=messages)
+	messages_to_user = users.get_messages(user_id)
+	messages_sent_by_user = users.get_sent_messages(user_id)
+	return render_template("userinformation.html", username=username, messages=messages_to_user, sent_messages=messages_sent_by_user)
 
 @app.route("/sendmessage", methods=["GET"])
 def private_message():

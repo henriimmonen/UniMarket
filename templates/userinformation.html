@@ -6,24 +6,42 @@
     <h4>Username: {{username}}</h4> <a href="/sendmessage">Send a message</a>
   </div>
 </div>
-{% for message in messages %}
-    <h3>Private Messages</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-            <th scope="col">Message from:</th>
-            <th scope="col">Message content:</th>
-            <th scope="col">Sent at:</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td>{{message.username}}</td>
-            <td>{{message.content}}</td>
-            <td>{{message.sent_at}}</td>
-        </tr>
-      </tbody>
-    </table>
-{% endfor %}
+  <h3>Received messages</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Message from:</th>
+        <th scope="col">Sent at:</th>
+        <th scope="col">Message content:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for message in messages %}
+        <td>{{message.username}}</td>
+        <td>{{message.sent_at}}</td>
+        <td>{{message.content}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3>Sent messages</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Message to:</th>
+        <th scope="col">Sent at:</th>
+        <th scope="col">Message content:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for sent in sent_messages %}
+        <td>{{sent.username}}</td>
+        <td>{{sent.sent_at}}</td>
+        <td>{{sent.content}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
