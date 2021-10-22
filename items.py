@@ -3,7 +3,7 @@ import users
 from flask import make_response, render_template
 
 def show_all():
-    sql = "SELECT id, header, location FROM listings ORDER BY id DESC"
+    sql = "SELECT id, header, location FROM listings WHERE visible=TRUE ORDER BY id DESC"
     result = db.session.execute(sql)
     all_items =  result.fetchall()
     return all_items
@@ -12,7 +12,7 @@ def post_object(header, location, content, user_id, price):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    sql = "INSERT INTO listings (header, location, content, user_id, price) VALUES (:header, :location, :content, :user_id, :price)"
+    sql = "INSERT INTO listings (header, location, content, user_id, price, visible) VALUES (:header, :location, :content, :user_id, :price, TRUE)"
     db.session.execute(sql, {"header":header, "location":location, "content":content, "user_id":user_id, "price":price})
     db.session.commit()
     return True
@@ -32,7 +32,7 @@ def post_photo(file, name, item_id):
         return False
 
 def show_object(id):
-    sql = "SELECT header, location, content, user_id, id, price FROM listings WHERE id=:id"
+    sql = "SELECT header, location, content, user_id, id, price FROM listings WHERE id=:id AND visible=TRUE"
     result = db.session.execute(sql, {"id":id})
     object = result.fetchall()
     return object

@@ -22,8 +22,8 @@ def post_object():
 	if len(location) < 1:
 		error = "Please enter a location for the item"
 		return render_template("error.html", error=error)
-	price = request.form["price"]
-	if len(price)<1 or price != int:
+	price = int(request.form["price"])
+	if price < 0 or not isinstance(price, int):
 		error = "Please enter a valid price"
 		return render_template("error.html", error=error)
 	content = request.form["content"]
@@ -34,7 +34,7 @@ def post_object():
 	if items.post_object(header, location, content, user_id, price):
 		return redirect("/showall")
 	else:
-		error = "Something went wrong"
+		error = "Object not posted"
 		return render_template("error.html",error=error)
 
 @app.route("/showall")
