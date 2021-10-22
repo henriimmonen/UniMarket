@@ -1,14 +1,14 @@
-{% extends "layout.html %}
+{% extends "layout.html" %}
 {% block title %}
 <h3> Adding a photo is always a good idea</h3> 
 {% endblock %}
 {% block content %}
 <form action="/postphoto" method="POST" enctype="multipart/form-data">
-    File: <input type="file" name="file">
+  <div class="container">
+    <input type="file" name="file">
     <input type="submit" value="Send">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="hidden" name="id" value="{{id}}">
+  </div>
 </form>
 {% endblock %}
-        
-		
