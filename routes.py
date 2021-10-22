@@ -22,12 +22,16 @@ def post_object():
 	if len(location) < 1:
 		error = "Please enter a location for the item"
 		return render_template("error.html", error=error)
+	price = request.form["price"]
+	if len(price)<1 or len(price)>4:
+		error = "Please enter a valid price"
+		return render_template("error.html", error=error)
 	content = request.form["content"]
 	if len(content) < 1:
 		error = "Please enter description of the item"
 		return render_template("error.html", error=error)
 	user_id = users.user_id()
-	if items.post_object(header, location, content, user_id):
+	if items.post_object(header, location, content, user_id, price):
 		return redirect("/showall")
 	else:
 		error = "Something went wrong"
@@ -103,17 +107,24 @@ def photo():
 	file = request.files["file"]
 	name = file.filename
 	item_id = request.form["id"]
-	items.post_photo(file, name, item_id)
-	return redirect("/object/" + str(item_id))
+	if items.post_photo(file, name, item_id):
+		return redirect("/object/" + str(item_id))
+	else:
+		error = "Failed to post a photo"
+		return render_template("error.html", error=error)
 
-@app.route("/object/<int:id>/photo")
-def post_photo(id):
+@app.route("/object/<int:id>/postphoto", methods=["GET"])
+def post_photo_form(id):
 	return render_template("photo.html", id=id)
 
-@app.route("/showphoto/<int:id>")
+@app.route("/object/<int:id>/showphoto")
 def show_photo(id):
-	object = items.show_photo(id)
-	return object
+	if items.show_photo(id):
+		object = items.show_photo(id)
+		return object
+	else:
+		error = "No photo yet"
+		return render_template("error.html", error=error)
 
 @app.route("/query")
 def query():

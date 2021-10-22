@@ -8,12 +8,12 @@ def show_all():
     all_items =  result.fetchall()
     return all_items
 
-def post_object(header, location, content, user_id):
+def post_object(header, location, content, user_id, price):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    sql = "INSERT INTO listings (header, location, content, user_id) VALUES (:header, :location, :content, :user_id)"
-    db.session.execute(sql, {"header":header, "location":location, "content":content, "user_id":user_id})
+    sql = "INSERT INTO listings (header, location, content, user_id, price) VALUES (:header, :location, :content, :user_id, :price)"
+    db.session.execute(sql, {"header":header, "location":location, "content":content, "user_id":user_id, "price":price})
     db.session.commit()
     return True
 
@@ -23,10 +23,13 @@ def post_photo(file, name, item_id):
     data = file.read()
     if len(data) > 5000*5000:
         return False
-    sql = "INSERT INTO photos (name,data, item_id) VALUES (:name,:data, :item_id)"
-    db.session.execute(sql, {"name":name, "data":data, "item_id":item_id})
-    db.session.commit()
-    return True
+    try:
+        sql = "INSERT INTO photos (name, data, item_id) VALUES (:name,:data, :item_id)"
+        db.session.execute(sql, {"name":name, "data":data, "item_id":item_id})
+        db.session.commit()
+        return True
+    except:
+        return False
 
 def show_object(id):
     sql = "SELECT header, location, content, user_id, id FROM listings WHERE id=:id"
@@ -55,8 +58,7 @@ def show_photo(id):
         response.headers.set("Content-Type","image/jpeg")
         return response
     except:
-        error = "Photo download unsuccessful"
-        return render_template("error.html", error=error)
+        return False
 
 def make_query(query):
     sql = "SELECT id, header FROM listings WHERE header LIKE :query"
