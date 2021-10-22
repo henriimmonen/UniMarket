@@ -32,7 +32,7 @@ def post_photo(file, name, item_id):
         return False
 
 def show_object(id):
-    sql = "SELECT header, location, content, user_id, id FROM listings WHERE id=:id"
+    sql = "SELECT header, location, content, user_id, id, price FROM listings WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
     object = result.fetchall()
     return object
@@ -75,3 +75,11 @@ def comment(item_id, user_id, comment):
         error = "Something went wrong"
         return render_template("error.html", error=error)
 
+def check_id(id):
+    sql = "SELECT user_id FROM listings WHERE user_id=:id"
+    result = db.session.execute(sql, {"id":id})
+    user_id = result.fetchall()
+    if len(user_id) > 0:
+        return True
+    else: 
+        return False

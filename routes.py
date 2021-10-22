@@ -23,7 +23,7 @@ def post_object():
 		error = "Please enter a location for the item"
 		return render_template("error.html", error=error)
 	price = request.form["price"]
-	if len(price)<1 or len(price)>4:
+	if len(price)<1 or price != int:
 		error = "Please enter a valid price"
 		return render_template("error.html", error=error)
 	content = request.form["content"]
@@ -115,6 +115,9 @@ def photo():
 
 @app.route("/object/<int:id>/postphoto", methods=["GET"])
 def post_photo_form(id):
+	if not items.check_id(users.user_id()):
+		error = "This isn't your object"
+		return render_template("error.html", error=error)
 	return render_template("photo.html", id=id)
 
 @app.route("/object/<int:id>/showphoto")
