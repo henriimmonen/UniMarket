@@ -2,10 +2,53 @@ from app import app
 from flask import render_template, request, redirect
 import users, items
 
-
 @app.route("/")
 def index():
 	return render_template("index.html")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+	if request.method == "GET":
+		return render_template("login.html")
+
+	if request.method == "POST":
+		username = request.form["username"]
+		password = request.form["password"]
+		if not users.login(username, password):
+			error = "Login failed"
+			return render_template("error.html", error=error)
+		return redirect("/")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+	if request.method == "GET":
+		return render_template("register.html")
+
+	if request.method == "POST":
+		username = request.form["username"]
+		if len(username) < 1 or len(username) > 20:
+			error = "Something is wrong with the username"
+			return render_template("error.html", error=error)
+
+		password1 = request.form["password1"]
+		password2 = request.form["password2"]
+
+		if password1 != password2:
+			error = "Passwords differ"
+			return render_template("error.html", error=error)
+		if password1 == "" or password2 == "":
+			error = "Password empty"
+			return render_template("error.html", error=error)
+		if not users.register(username, password1):
+			error = "Something went wrong!"
+			return render_template("error.html", error=error)
+		users.login(username, password1)
+		return redirect("/")
+
+@app.route("/logout")
+def logout():
+	users.logout()
+	return redirect("/")
 
 @app.route("/sell")
 def form_to_post():
@@ -51,49 +94,14 @@ def show_object(id):
 	else: 
 		return redirect("/")
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-	if request.method == "GET":
-		return render_template("login.html")
-
-	if request.method == "POST":
-		username = request.form["username"]
-		password = request.form["password"]
-		if not users.login(username, password):
-			return render_template("index.html")
-
-		return redirect("/")
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-	if request.method == "GET":
-		return render_template("register.html")
-
-	if request.method == "POST":
-		username = request.form["username"]
-		if len(username) < 1 or len(username) > 20:
-			error = "Something is wrong with the username"
-			return render_template("error.html", error=error)
-
-		password1 = request.form["password1"]
-		password2 = request.form["password2"]
-
-		if password1 != password2:
-			error = "Passwords differ"
-			return render_template("error.html", error=error)
-		if password1 == "" or password2 == "":
-			error = "Password empty"
-			return render_template("error.html", error=error)
-		if not users.register(username, password1):
-			error = "Something went wrong!"
-			return render_template("error.html", error=error)
-		users.login(username, password1)
-		return redirect("/")
-
-@app.route("/logout")
-def logout():
-	users.logout()
-	return redirect("/")
+@app.route("/object/<int:id>/delete", methods=["GET"])
+def delete_item(id):
+	if items.check_id(users.user_id()):
+		items.delete_item(id)
+		return redirect("/myitems")
+	else:
+		error = "Not able to delete item"
+		return render_template("error.html", error=error)
 
 @app.route("/myitems")
 def my_items():
@@ -149,7 +157,8 @@ def user_information():
 	username = users.user_name(user_id)
 	messages_to_user = users.get_messages(user_id)
 	messages_sent_by_user = users.get_sent_messages(user_id)
-	return render_template("userinformation.html", username=username, messages=messages_to_user, sent_messages=messages_sent_by_user)
+	return render_template("userinformation.html", username=username, 
+		messages=messages_to_user, sent_messages=messages_sent_by_user)
 
 @app.route("/sendmessage", methods=["GET"])
 def private_message():

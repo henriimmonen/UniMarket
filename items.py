@@ -37,6 +37,11 @@ def show_object(id):
     object = result.fetchall()
     return object
 
+def delete_item(id):
+    sql = "UPDATE listings SET visible=FALSE WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+
 def show_comments(id):
     sql1 = "SELECT c.content, c.sent_at, u.username FROM comments c, users u WHERE item_id=:id AND u.id=c.poster_id "
     result1 = db.session.execute(sql1, {"id":id})
@@ -44,7 +49,7 @@ def show_comments(id):
     return comments
 
 def my_items(user_id):
-    sql = "SELECT * FROM listings WHERE user_id=:user_id" 
+    sql = "SELECT * FROM listings WHERE user_id=:user_id AND visible=TRUE" 
     result = db.session.execute(sql, {"user_id":user_id})
     myitems = result.fetchall()
     return myitems
