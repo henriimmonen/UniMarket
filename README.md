@@ -19,7 +19,4 @@ Tietokantasovellus course project
 + A statistics page is featured for users to see data about UniMarket
 
 #### Three users in database
-+ You can test the application using these three users or creating your own:
-++ Kissa (Password = 'KissanKorva91')
-++ Petteri Kaniini (Password = 'PeteOnParas')
-++ Kimmo Koira (Password = 'salasana') 
++ You can test the application using these three users or creating your own: Kissa (Password = 'KissanKorva91'), Petteri Kaniini (Password = 'PeteOnParas'), Kimmo Koira (Password = 'salasana').
