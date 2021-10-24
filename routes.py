@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import users, items
+import users, items, stats
 
 @app.route("/")
 def index():
@@ -178,4 +178,13 @@ def post_message():
 
 @app.route("/statistics", methods=["GET"])
 def statistics():
-	
+	amount_of_items = stats.amount_of_items()
+	avg_price = stats.avg_price_hki()
+	total_users = stats.total_users()
+	total_sum = stats.total_sum()
+	min_price = stats.min_price()
+	max_price = stats.max_price()
+	sold_items_per_user = stats.sold_items_per_user()
+	return render_template("statistics.html", amount_of_items=amount_of_items,avg_price=avg_price,
+		total_users=total_users, total_sum=total_sum, min_price=min_price, max_price=max_price, 
+		sold_items_per_user=sold_items_per_user)

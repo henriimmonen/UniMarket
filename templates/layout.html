@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
+  <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='CSS/main.css') }}">
 </head>
 
 <body>
@@ -14,6 +14,9 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/showall">Show all items for sale</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/statistics">Statistics</a>
           </li>
           {% if not session.user_id %}
           <li class="nav-item">
@@ -33,16 +36,17 @@
           {% endif %}
         </ul>
     </nav>
+  </div>
+  <div class="container">
     <h1> Welcome to UniMarket! </h1>
-    <h3> UniMarket is a portal for buying and selling used items. </h3>	
-    {% block title %}{% endblock %}		
-    {% block content %}{% endblock %}
-    <br>
+    <h3> UniMarket is a portal for buying and selling used items. </h3>
+    {% block title %}
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
   </div>
   <div class="bottom">
-    <div class="col">
-      UniMarket is a Tietokantasovellus-project for University of Helsinki.
-    </div>
+    UniMarket is a Tietokantasovellus-project for University of Helsinki.
   </div>
 </body>
 </html>
