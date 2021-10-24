@@ -56,13 +56,13 @@ def check_csrf():
         abort(403)
 
 def get_messages(user_id):
-    sql = "SELECT m.content, m.sent_at, u.username FROM messages m, users u WHERE sent_to=:id AND u.id=m.sent_by"
+    sql = "SELECT m.content, m.sent_at, u.username FROM messages m, users u WHERE sent_to=:id AND u.id=m.sent_by ORDER BY m.id DESC"
     result = db.session.execute(sql, {"id":user_id})
     messages = result.fetchall()
     return messages
 
 def get_sent_messages(user_id):
-    sql = "SELECT m.content, m.sent_at, u.username FROM messages m, users u WHERE sent_by=:id AND u.id=m.sent_to"
+    sql = "SELECT m.content, m.sent_at, u.username FROM messages m, users u WHERE sent_by=:id AND u.id=m.sent_to ORDER BY m.id DESC"
     result = db.session.execute(sql, {"id":user_id})
     messages = result.fetchall()
     return messages

@@ -21,7 +21,7 @@ def post_photo(file, name, item_id):
     if not name.endswith(".jpg"):
         return False
     data = file.read()
-    if len(data) > 5000*5000:
+    if len(data) > 3000*3000:
         return False
     try:
         sql = "INSERT INTO photos (name, data, item_id) VALUES (:name,:data, :item_id)"
@@ -43,13 +43,13 @@ def delete_item(id):
     db.session.commit()
 
 def show_comments(id):
-    sql1 = "SELECT c.content, c.sent_at, u.username FROM comments c, users u WHERE item_id=:id AND u.id=c.poster_id "
-    result1 = db.session.execute(sql1, {"id":id})
+    sql = "SELECT c.content, c.sent_at, u.username FROM comments c, users u WHERE item_id=:id AND u.id=c.poster_id"
+    result1 = db.session.execute(sql, {"id":id})
     comments = result1.fetchall()
     return comments
 
 def my_items(user_id):
-    sql = "SELECT * FROM listings WHERE user_id=:user_id AND visible=TRUE" 
+    sql = "SELECT * FROM listings WHERE user_id=:user_id AND visible=TRUE ORDER BY id DESC" 
     result = db.session.execute(sql, {"user_id":user_id})
     myitems = result.fetchall()
     return myitems
