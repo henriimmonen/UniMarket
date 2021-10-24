@@ -33,7 +33,7 @@
     <tr>
       {% for message in messages %}
       <td>{{message.username}}</td>
-      <td>{{message.sent_at}}</td>
+      <td>{{sent.sent_at.strftime("%Y-%m-%d %H:%M")}}</td>
       <td>{{message.content}}</td>
     </tr>
     {% endfor %}
@@ -60,7 +60,7 @@
     <tr>
       {% for sent in sent_messages %}
       <td>{{sent.username}}</td>
-      <td>{{sent.sent_at}}</td>
+      <td>{{sent.sent_at.strftime("%Y-%m-%d %H:%M")}}</td>
       <td>{{sent.content}}</td>
     </tr>
     {% endfor %}

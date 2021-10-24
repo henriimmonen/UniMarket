@@ -175,3 +175,7 @@ def post_message():
 		else:
 			error = "Message not sent"
 			return render_template("error.html", error=error)
+
+@app.route("/statistics", methods=["GET"])
+def statistics():
+	
