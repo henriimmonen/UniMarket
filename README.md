@@ -6,7 +6,7 @@ Tietokantasovellus course project
 
 #### Features of the application include 
 + Registering form for users 
-+ Login page for users  
++ Login/Registering page for users  
 + Page showing all items for sale
 + Logged in users can post an item for sale
 + Logged in users can see their posted items on their personal page
@@ -17,3 +17,9 @@ Tietokantasovellus course project
 + Seller can delete the item from the page after it is sold
 + Users can send private messages to other users via their personal page
 + A statistics page is featured for users to see data about UniMarket
+
+#### Three users in database
++ You can test the application using these three users or creating your own:
+++ Kissa (Password = 'KissanKorva91')
+++ Petteri Kaniini (Password = 'PeteOnParas')
+++ Kimmo Koira (Password = 'salasana') 
